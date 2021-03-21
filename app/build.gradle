@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
 android {
     compileSdkVersion 30
 
@@ -36,6 +39,13 @@ android {
         }
     }
 
+    defaultConfig {
+        buildConfigField "String", "UNSPASH_BASE_URL", "\"https://api.unsplash.com/\""
+        buildConfigField "String", "UNSPLASH_API_KEY" , "\""+getApiKey("UNSPLASH")+"\""
+        buildConfigField "String", "OPEN_WEATHER_MAPS_BASE_URL", "\"https://api.openweathermap.org/data/2.5/\""
+        buildConfigField "String", "OPEN_WEATHER_MAPS_API_KEY" , "\""+getApiKey("OPENWEATHERMAPS")+"\""
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -51,8 +61,17 @@ android {
         shaders false
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     packagingOptions {
@@ -74,8 +93,43 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
 
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    // Kotlin Flow
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+
+    // Lifecycle (ViewModel + LiveData)
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$liveDataKtx"
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+
+    // Hilt + Dagger
+    implementation "com.google.dagger:hilt-android:$hiltAndroidVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltAndroidVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltViewModelVersion"
+    kapt "androidx.hilt:hilt-compiler:$hiltViewModelVersion"
+
+    // Debug
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
     testImplementation 'junit:junit:4.13.2'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+}
+
+static def getApiKey(String key){
+    Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props[key]
 }
