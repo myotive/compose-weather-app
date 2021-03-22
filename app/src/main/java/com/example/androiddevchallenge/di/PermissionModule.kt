@@ -2,7 +2,7 @@ package com.example.androiddevchallenge.di
 
 import android.app.Activity
 import android.content.Context
-import com.example.androiddevchallenge.location.PermissionHelper
+import com.example.androiddevchallenge.location.LocationPermissionHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +16,6 @@ import java.lang.ref.WeakReference
 class PermissionModule {
     @ActivityScoped
     @Provides
-    fun providePermissionHelper(@ActivityContext context: Context): PermissionHelper =
-        PermissionHelper(WeakReference(context as Activity))
+    fun providePermissionHelper(@ActivityContext context: Context): LocationPermissionHelper =
+        LocationPermissionHelper(WeakReference(context as Activity))
 }

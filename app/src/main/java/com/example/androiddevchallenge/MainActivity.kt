@@ -15,14 +15,13 @@
  */
 package com.example.androiddevchallenge
 
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androiddevchallenge.location.LocationHelper
-import com.example.androiddevchallenge.location.PermissionHelper
+import com.example.androiddevchallenge.location.LocationPermissionHelper
 import com.example.androiddevchallenge.screens.WeatherScreen
 import com.example.androiddevchallenge.screens.viewmodels.WeatherViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var locationHelper: LocationHelper
     @Inject
-    lateinit var permissionHelper: PermissionHelper
+    lateinit var locationPermissionHelper: LocationPermissionHelper
 
     private val weatherViewModel: WeatherViewModel by viewModels()
 
@@ -47,10 +46,10 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(locationHelper)
 
         when {
-            permissionHelper.hasLocationPermissions() -> locationHelper.getCurrentLocation {
+            locationPermissionHelper.hasLocationPermissions() -> locationHelper.getCurrentLocation {
                 updateLocation(it)
             }
-            else -> permissionHelper.requestPermissions(LOCATION_ACCESS_REQUEST_CODE)
+            else -> locationPermissionHelper.requestPermissions(LOCATION_ACCESS_REQUEST_CODE)
         }
 
         setContent {
@@ -74,16 +73,16 @@ class MainActivity : AppCompatActivity() {
 
         when (requestCode) {
             LOCATION_ACCESS_REQUEST_CODE -> {
-                if (permissionHelper.permissionGranted(grantResults)) {
+                if (locationPermissionHelper.permissionGranted(grantResults)) {
                     locationHelper.getCurrentLocation {
                         updateLocation(it)
                     }
                 }
             }
             else -> {
-                if (!permissionHelper.hasLocationPermissions()) {
+                if (!locationPermissionHelper.hasLocationPermissions()) {
                     // Permission is not granted (Permanently)
-                    permissionHelper.showPermissionDeniedDialog()
+                    locationPermissionHelper.showPermissionDeniedDialog()
                 }
             }
         }

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import java.lang.ref.WeakReference
 
-class PermissionHelper(private val activity: WeakReference<Activity>) {
+class LocationPermissionHelper(private val activity: WeakReference<Activity>) {
     fun hasLocationPermissions(): Boolean = activity.get()?.let {
         ContextCompat.checkSelfPermission(
             it,
@@ -23,14 +23,12 @@ class PermissionHelper(private val activity: WeakReference<Activity>) {
     } ?: false
 
 
-    fun requestPermissions(requestCode: Int) = activity.get()?.let {
-        it.requestPermissions(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ), requestCode
-        )
-    }
+    fun requestPermissions(requestCode: Int) = activity.get()?.requestPermissions(
+        arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ), requestCode
+    )
 
     fun showPermissionDeniedDialog(): Unit = activity.get()?.let {
         AlertDialog.Builder(it)
