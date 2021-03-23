@@ -32,10 +32,10 @@ class LocationPermissionHelper(private val activity: WeakReference<Activity>) {
             it,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+            it,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
     } ?: false
 
     fun requestPermissions(requestCode: Int) = activity.get()?.requestPermissions(
