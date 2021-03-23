@@ -1,3 +1,18 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge.screens
 
 import androidx.compose.animation.Crossfade
@@ -48,7 +63,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-
 
 @Composable
 fun WeatherScreen(
@@ -101,18 +115,22 @@ fun LoadedScreen(state: WeatherUIState.Loaded, refresh: (String) -> Unit = {}) =
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, end = 16.dp), horizontalArrangement = Arrangement.End
+                        .padding(top = 16.dp, end = 16.dp),
+                    horizontalArrangement = Arrangement.End
                 ) {
 
                     Text("Toggle Temp Unit ")
 
-                    Switch(checked = toggleSwitchState, onCheckedChange = {
-                        toggleSwitchState = it
-                        if (toggleSwitchState)
-                            refresh(OpenWeatherAPI.Units.METRIC)
-                        else
-                            refresh(OpenWeatherAPI.Units.IMPERIAL)
-                    })
+                    Switch(
+                        checked = toggleSwitchState,
+                        onCheckedChange = {
+                            toggleSwitchState = it
+                            if (toggleSwitchState)
+                                refresh(OpenWeatherAPI.Units.METRIC)
+                            else
+                                refresh(OpenWeatherAPI.Units.IMPERIAL)
+                        }
+                    )
                 }
 
                 Crossfade(
@@ -120,7 +138,8 @@ fun LoadedScreen(state: WeatherUIState.Loaded, refresh: (String) -> Unit = {}) =
                     animationSpec = tween(300)
                 ) { selectedColor ->
                     WeatherTop(
-                        weather = state.model, modifier = Modifier
+                        weather = state.model,
+                        modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),
                         units = temperatureUnit,
@@ -155,20 +174,23 @@ fun DailyWeather(
     timezoneOffset: Int,
     units: String
 ) =
-    LazyRow(modifier = modifier, content = {
-        items(dailyWeather) { item ->
-            Day(
-                item,
-                timezoneOffset,
-                backgroundColor,
-                units,
-                modifier = Modifier
-                    .width(150.dp)
-                    .height(225.dp)
-                    .padding(end = 8.dp)
-            )
+    LazyRow(
+        modifier = modifier,
+        content = {
+            items(dailyWeather) { item ->
+                Day(
+                    item,
+                    timezoneOffset,
+                    backgroundColor,
+                    units,
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(225.dp)
+                        .padding(end = 8.dp)
+                )
+            }
         }
-    })
+    )
 
 @Composable
 fun Day(
