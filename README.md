@@ -2,21 +2,30 @@
 
 <!--- Replace <OWNER> with your Github Username and <REPOSITORY> with the name of your repository. -->
 <!--- You can find both of these in the url bar when you open your repository in github. -->
-![Workflow result](https://github.com/<OWNER>/<REPOSITORY>/workflows/Check/badge.svg)
+![Workflow result](https://github.com/myotive/compose-weather-app/workflows/Check/badge.svg)
 
 
 ## :scroll: Description
 <!--- Describe your app in one or two sentences -->
+For the fourth Android developer challenge with compose, we were tasked with creating a weather app.
 
 
 ## :bulb: Motivation and Context
 <!--- Optionally point readers to interesting parts of your submission. -->
 <!--- What are you especially proud of? -->
 
+I really wanted to see how a bunch of android framework and library tools work in conjunction with compose, so I attempted to build a full feature app (at probably the sacrifice to pretty UI).
+
+This app takes the users last known address and pulls weather data for the location using (OpenWeatherMaps)[https://openweathermap.org/api]. Because we know the user's location, the app then attempts to make the UI more personable by fetching a random image from Unsplash using the user's City and State as search parameters.
+
+It's important to note that you will need an API key from both unsplash and openweathermap to be able to run the code sample. Please create an account at the following locations and update the [corresponding API keys in the secrets.properties](https://github.com/myotive/compose-weather-app/blob/dev/secrets.properties) file.
+* https://unsplash.com/developers
+
+* https://openweathermap.org/api
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
-<img src="/results/screenshot_1.png" width="260">&emsp;<img src="/results/screenshot_2.png" width="260">
+<img src="/results/screenshot_1.png" width="260">&emsp;<img src="/results/screenshot_2.png" width="260">&emsp;<img src="/results/screenshot_3.png" width="260">
 
 ## License
 ```
