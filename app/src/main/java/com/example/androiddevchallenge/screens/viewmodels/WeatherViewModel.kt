@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androiddevchallenge.di.IoDispatcher
 import com.example.androiddevchallenge.di.MainDispatcher
+import com.example.androiddevchallenge.network.OpenWeatherAPI
 import com.example.androiddevchallenge.repository.IWeatherRepository
 import com.example.androiddevchallenge.repository.model.WeatherModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +40,9 @@ class WeatherViewModel @Inject constructor(
     val currentUIState: LiveData<WeatherUIState> = _uiState
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    fun load(context: Context, location: Location) = viewModelScope.launch {
+    fun load(context: Context,
+             location: Location,
+             currentUnit: String = OpenWeatherAPI.Units.IMPERIAL) = viewModelScope.launch {
         withContext(ioDispatcher) {
             val geocoder = Geocoder(context, Locale.getDefault())
             val addresses: List<Address> =
@@ -53,7 +56,8 @@ class WeatherViewModel @Inject constructor(
                 location.latitude,
                 location.longitude,
                 cityName,
-                stateName
+                stateName,
+                currentUnit
             )
 
             // Update UI State to be Loaded

@@ -24,33 +24,33 @@ data class OpenWeatherOneCallResponse(
 
 data class Current(
     @SerializedName("clouds")
-    val clouds: Int,
+    val clouds: Int = 0,
     @SerializedName("dew_point")
-    val dewPoint: Double,
+    val dewPoint: Double = 0.0,
     @SerializedName("dt")
-    val dt: Int,
+    val dt: Long = 0,
     @SerializedName("feels_like")
-    val feelsLike: Double,
+    val feelsLike: Double = 0.0,
     @SerializedName("humidity")
-    val humidity: Int,
+    val humidity: Int = 0,
     @SerializedName("pressure")
-    val pressure: Int,
+    val pressure: Int = 0,
     @SerializedName("sunrise")
-    val sunrise: Int,
+    val sunrise: Int = 0,
     @SerializedName("sunset")
-    val sunset: Int,
+    val sunset: Int = 0,
     @SerializedName("temp")
-    val temp: Double,
+    val temp: Double = 0.0,
     @SerializedName("uvi")
-    val uvi: Double,
+    val uvi: Double = 0.0,
     @SerializedName("visibility")
-    val visibility: Int,
+    val visibility: Int = 0,
     @SerializedName("weather")
-    val weather: List<Weather>,
+    val weather: List<Weather> = listOf(),
     @SerializedName("wind_deg")
-    val windDeg: Int,
+    val windDeg: Int = 0,
     @SerializedName("wind_speed")
-    val windSpeed: Double
+    val windSpeed: Double = 0.0
 )
 
 data class Daily(
@@ -59,7 +59,7 @@ data class Daily(
     @SerializedName("dew_point")
     val dewPoint: Double,
     @SerializedName("dt")
-    val dt: Int,
+    val dt: Long,
     @SerializedName("feels_like")
     val feelsLike: FeelsLike,
     @SerializedName("humidity")
@@ -77,7 +77,7 @@ data class Daily(
     @SerializedName("uvi")
     val uvi: Double,
     @SerializedName("weather")
-    val weather: List<WeatherX>,
+    val weather: List<Weather>,
     @SerializedName("wind_deg")
     val windDeg: Int,
     @SerializedName("wind_speed")
@@ -96,7 +96,7 @@ data class Hourly(
     @SerializedName("humidity")
     val humidity: Int,
     @SerializedName("pop")
-    val pop: Int,
+    val pop: Double,
     @SerializedName("pressure")
     val pressure: Int,
     @SerializedName("temp")
@@ -106,7 +106,7 @@ data class Hourly(
     @SerializedName("visibility")
     val visibility: Int,
     @SerializedName("weather")
-    val weather: List<WeatherXX>,
+    val weather: List<Weather>,
     @SerializedName("wind_deg")
     val windDeg: Int,
     @SerializedName("wind_gust")
@@ -157,26 +157,4 @@ data class Temp(
     val morn: Double,
     @SerializedName("night")
     val night: Double
-)
-
-data class WeatherX(
-    @SerializedName("description")
-    val description: String,
-    @SerializedName("icon")
-    val icon: String,
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("main")
-    val main: String
-)
-
-data class WeatherXX(
-    @SerializedName("description")
-    val description: String,
-    @SerializedName("icon")
-    val icon: String,
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("main")
-    val main: String
 )

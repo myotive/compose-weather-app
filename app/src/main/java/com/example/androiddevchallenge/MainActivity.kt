@@ -22,6 +22,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.androiddevchallenge.location.LocationHelper
 import com.example.androiddevchallenge.location.LocationPermissionHelper
+import com.example.androiddevchallenge.network.OpenWeatherAPI
 import com.example.androiddevchallenge.screens.WeatherScreen
 import com.example.androiddevchallenge.screens.viewmodels.WeatherViewModel
 import com.example.androiddevchallenge.ui.theme.MyTheme
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var locationHelper: LocationHelper
+
     @Inject
     lateinit var locationPermissionHelper: LocationPermissionHelper
 
@@ -54,9 +56,9 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             MyTheme {
-                WeatherScreen(weatherViewModel) {
+                WeatherScreen(weatherViewModel) { currentUnit ->
                     locationHelper.getCurrentLocation {
-                        updateLocation(it)
+                        updateLocation(it, currentUnit)
                     }
                 }
             }
@@ -88,5 +90,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateLocation(location: Location) = weatherViewModel.load(this, location)
+    private fun updateLocation(
+        location: Location,
+        currentUnit: String = OpenWeatherAPI.Units.IMPERIAL
+    ) = weatherViewModel.load(this, location, currentUnit)
 }

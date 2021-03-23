@@ -14,7 +14,8 @@ interface IWeatherRepository {
         lat: Double,
         long: Double,
         cityName: String,
-        stateName: String
+        stateName: String,
+        currentUnit: String = OpenWeatherAPI.Units.IMPERIAL
     ): WeatherModel
 }
 
@@ -28,11 +29,12 @@ class WeatherRepository @Inject constructor(
         lat: Double,
         long: Double,
         cityName: String,
-        stateName: String
+        stateName: String,
+        currentUnit: String
     ): WeatherModel = withContext(ioDispatcher) {
 
         Timber.i("Fetch weather data for $lat $long")
-        val openWeatherData = openWeatherAPI.getCurrentWeather(lat, long)
+        val openWeatherData = openWeatherAPI.getCurrentWeather(lat, long, currentUnit)
         Timber.i(openWeatherData.toString())
 
         Timber.i("Fetch something from unsplash for $cityName, $stateName")
@@ -48,7 +50,10 @@ class WeatherRepository @Inject constructor(
             backgroundPhotoUrl = randomPhoto.urls.raw,
             currentWeather = openWeatherData.current,
             dailyWeather = openWeatherData.daily,
-            hourlyWeather = openWeatherData.hourly
+            hourlyWeather = openWeatherData.hourly,
+            timezoneOffset = openWeatherData.timezoneOffset,
+            city = cityName,
+            state = stateName
         )
     }
 }
