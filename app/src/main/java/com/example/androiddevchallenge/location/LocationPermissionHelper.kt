@@ -23,6 +23,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.example.androiddevchallenge.R
 import java.lang.ref.WeakReference
 
 class LocationPermissionHelper(private val activity: WeakReference<Activity>) {
@@ -31,10 +32,10 @@ class LocationPermissionHelper(private val activity: WeakReference<Activity>) {
             it,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-            it,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
+                ContextCompat.checkSelfPermission(
+                    it,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
     } ?: false
 
     fun requestPermissions(requestCode: Int) = activity.get()?.requestPermissions(
@@ -47,10 +48,10 @@ class LocationPermissionHelper(private val activity: WeakReference<Activity>) {
 
     fun showPermissionDeniedDialog(): Unit = activity.get()?.let {
         AlertDialog.Builder(it)
-            .setMessage("You have denied permanently these permissions, please go to setting to enable these permissions.")
+            .setMessage(it.getString(R.string.denied_permissions))
             .setCancelable(true)
-            .setPositiveButton("Go to Settings") { _, _ -> goToApplicationSettings() }
-            .setNegativeButton("Cancel", null)
+            .setPositiveButton(it.getString(R.string.permission_dialog_positive_button)) { _, _ -> goToApplicationSettings() }
+            .setNegativeButton(it.getString(R.string.permission_dialog_negative_button), null)
             .show()
         Unit
     } ?: Unit

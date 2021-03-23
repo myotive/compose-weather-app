@@ -76,7 +76,7 @@ fun WeatherScreen(
             state = uiState as WeatherUIState.Loaded,
             refresh = retry
         )
-        is WeatherUIState.Error -> ErrorScreen() {
+        is WeatherUIState.Error -> ErrorScreen {
             retry(OpenWeatherAPI.Units.IMPERIAL)
         }
         WeatherUIState.Loading -> LoadingScreen()
@@ -100,7 +100,7 @@ fun LoadedScreen(state: WeatherUIState.Loaded, refresh: (String) -> Unit = {}) =
                 data = state.model.backgroundPhotoUrl,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
-                contentDescription = "Background image"
+                contentDescription = "${state.cityName} ${state.stateName}"
             )
 
             Column(

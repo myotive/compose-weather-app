@@ -23,6 +23,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.example.androiddevchallenge.R
 
 @Composable
 fun ErrorScreen(tryAgainClicked: () -> Unit = {}) = Column(
@@ -30,8 +32,8 @@ fun ErrorScreen(tryAgainClicked: () -> Unit = {}) = Column(
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
-    Text(text = "There was an issue loading this screen.")
+    Text(text = stringResource(R.string.error_message))
     Button(onClick = { tryAgainClicked() }) {
-        Text(text = "Try again?")
+        Text(text = stringResource(R.string.error_screen_positive_button))
     }
 }
